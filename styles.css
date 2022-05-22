@@ -26,6 +26,10 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    user-select: none;
+}
+.lose{
+    background-color: rgb(177, 56, 56);
 }
 
 .text {
@@ -80,4 +84,12 @@ h1 {
 
 .yellow {
     background-color: rgb(250, 255, 8);
+}
+.active {
+    background-color: gray;
+    box-shadow: 0 0 16px 5px #c8c8c8;
+}
+
+audio {
+    display: none;
 }
