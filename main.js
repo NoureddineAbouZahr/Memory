@@ -9,6 +9,7 @@ const DELAY_BETWEEN_CLICK = 500;
 // start 
 var squares = document.getElementsByClassName('square');
 var sounds = document.querySelectorAll('audio');
+var loseSound=document.getElementById("lose ")
 
 for (let i = 0; i < squares.length; i++) {
     const square = squares[i];
@@ -30,8 +31,8 @@ for (let i = 0; i < squares.length; i++) {
             }
             if (game.record.length == game.squence.length) {
                 setTimeout(() => {
-                    playSequenceBot();
                     addSquenceTimeStamp();
+                    playSequenceBot();
                     game.record = [];
                     
                 }, DELAY_BETWEEN_CLICK);
@@ -49,32 +50,19 @@ function start() {
     game.active = true;
     playSequenceBot();
 }
+Array.prototype.last = function() {
+    return this[this.length-1];
+}
 function playSequenceBot() {
     if (game.squence.length == 0) return;
     game.allowClick = false;
-    let i = 0;
-    function loop() {
-        setTimeout(() => {
-            if (i > 0) {
-                squares[game.squence[i-1]].classList.remove('active');
-            }
-            squares[game.squence[i]].classList.add('active');
-            sounds[game.squence[i]].play();
-            
-            
-            i++;
-            if (i < game.squence.length) {
-                loop();
-            }
-            if(i == game.squence.length) {
-                setTimeout(() => {
-                    squares[game.squence[i-1]].classList.remove('active');
-                    game.allowClick = true;
-                }, DELAY_BETWEEN_CLICK);
-            }
-        }, DELAY_BETWEEN_CLICK);
-    }
-    loop();
+
+    squares[game.squence.last()].classList.add('active');
+    sounds[game.squence.last()].play();
+    setTimeout(() => {
+        squares[game.squence.last()].classList.remove('active');
+        game.allowClick = true;
+    }, DELAY_BETWEEN_CLICK);
 }
 
 
@@ -103,4 +91,7 @@ function gameOver(){
         document.body.classList.remove('lose');
     }, 800);
     txt.innerText="Game Over, press any key to restart!"
+    
+        lose.play()
+    
 }
